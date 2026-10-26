@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0b0c10">
+<link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon.svg">
+<title>Run Lab</title>
+<style>
+:root{--bg:#f4f5f7;--card:#fff;--ink:#0d0f14;--mute:#6b7280;--line:#e5e7eb;--acc:#2f7d00;--accbg:#e9f7d4;--ok:#1a9d55;--warn:#d98a00;--bad:#d6334a;--r:20px}
+@media(prefers-color-scheme:dark){:root{--bg:#0b0c10;--card:#15171d;--ink:#f2f4f8;--mute:#8a919e;--line:#242730;--acc:#c6ff3d;--accbg:#232c0d;--ok:#3ddc84;--warn:#ffb020;--bad:#ff5d73}}
+*{box-sizing:border-box;margin:0}html{-webkit-text-size-adjust:100%}
+body{font:16px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;background:var(--bg);color:var(--ink);min-height:100dvh;padding-top:env(safe-area-inset-top)}
+nav{position:fixed;z-index:20;background:color-mix(in srgb,var(--card) 82%,transparent);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:flex;gap:2px}
+nav a{display:flex;flex-direction:column;align-items:center;gap:3px;color:var(--mute);text-decoration:none;font-size:11px;font-weight:600;padding:8px 4px;flex:1;border-radius:14px}
+nav a svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+nav a.on{color:var(--acc)}
+main{max-width:1000px;margin:auto;padding:22px 16px calc(100px + env(safe-area-inset-bottom))}
+@media(max-width:800px){nav{left:0;right:0;bottom:0;padding:4px 6px calc(4px + env(safe-area-inset-bottom));border-top:1px solid var(--line)}}
+@media(min-width:801px){nav{top:0;left:0;bottom:0;width:210px;flex-direction:column;justify-content:flex-start;padding:28px 12px;border-right:1px solid var(--line)}
+nav a{flex:none;flex-direction:row;font-size:15px;gap:12px;padding:11px 14px}nav .logo{display:block}main{margin-left:210px;max-width:none;padding:34px 40px}main>*{max-width:960px}}
+nav .logo{display:none;font-weight:800;font-size:20px;padding:0 14px 22px;letter-spacing:-.5px}
+h1{font-size:32px;letter-spacing:-.8px;font-weight:800;margin-bottom:4px}h2{font-size:18px;font-weight:700;margin:26px 0 12px;letter-spacing:-.3px}
+.sub{color:var(--mute);margin-bottom:20px}.grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.card{background:var(--card);border-radius:var(--r);padding:18px;border:1px solid var(--line)}
+.k{font-size:12px;color:var(--mute);font-weight:600;text-transform:uppercase;letter-spacing:.6px}.v{font-size:30px;font-weight:800;letter-spacing:-1px;margin-top:4px}.v small{font-size:14px;color:var(--mute);font-weight:600;letter-spacing:0}
+.pill{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700;background:var(--accbg);color:var(--acc)}
+.ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 15%,transparent)}.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 15%,transparent)}.bad{color:var(--bad);background:color-mix(in srgb,var(--bad) 15%,transparent)}.mu{color:var(--mute);background:var(--line)}
+.row{display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.row:last-child{border:0}.row .g{flex:1;min-width:0}.row b{display:block}.row span{color:var(--mute);font-size:14px}
+.banner{background:var(--accbg);color:var(--acc);padding:10px 14px;border-radius:14px;font-size:14px;font-weight:600;margin-bottom:16px}
+button,.btn{font:inherit;font-weight:700;border:0;border-radius:14px;padding:11px 18px;background:var(--acc);color:var(--bg);cursor:pointer}button.s{background:var(--line);color:var(--ink)}
+input,textarea,select{font:inherit;width:100%;padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin:6px 0 14px;scrollbar-width:none}.chips button{background:var(--card);color:var(--ink);border:1px solid var(--line);white-space:nowrap;padding:8px 14px}.chips button.on{background:var(--acc);color:var(--bg);border-color:var(--acc)}
+.ex{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}.ex .card{padding:0;overflow:hidden;cursor:pointer}.ex img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:top right;display:block;background:var(--line)}.ex .t{padding:12px 14px}.ex .t b{display:block}.ex .t span{font-size:13px;color:var(--mute)}
+dialog{border:0;border-radius:22px;padding:0;max-width:min(920px,96vw);width:100%;max-height:92dvh;background:var(--card);color:var(--ink)}dialog::backdrop{background:#000a;backdrop-filter:blur(6px)}
+dialog img{width:100%;display:block}.dh{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--card);border-bottom:1px solid var(--line);z-index:2}
+.chat{display:flex;flex-direction:column;gap:10px;min-height:40dvh}.m{padding:12px 15px;border-radius:18px;max-width:88%;white-space:pre-wrap}.m.u{align-self:flex-end;background:var(--acc);color:var(--bg)}.m.a{align-self:flex-start;background:var(--card);border:1px solid var(--line)}
+.inp{position:sticky;bottom:calc(78px + env(safe-area-inset-bottom));display:flex;gap:8px;margin-top:14px}@media(min-width:801px){.inp{bottom:20px}}
+.bar{display:flex;align-items:flex-end;gap:5px;height:120px}.bar i{flex:1;background:var(--acc);border-radius:6px 6px 2px 2px;min-height:3px;opacity:.9;position:relative}.bar i em{position:absolute;bottom:-18px;left:50%;transform:translateX(-50%);font:600 10px system-ui;color:var(--mute);font-style:normal}
+.tabs{display:flex;gap:6px;margin-bottom:12px}svg text{fill:var(--mute);font:600 10px system-ui}
+</style></head><body>
+<nav id="nav"><div class="logo">Run Lab</div></nav><main id="app"></main>
+<dialog id="dlg"><div class="dh"><b id="dt"></b><button class="s" onclick="dlg.close()">Fermer</button></div><div id="db"></div></dialog>
+<script>
+const $=s=>document.querySelector(s),app=$('#app'),dlg=$('#dlg');
+const IC={dashboard:'<path d="M3 13h4l3-8 4 14 3-6h4"/>',plan:'<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M8 3v4M16 3v4M4 10h16"/>',coach:'<path d="M21 12a8 8 0 0 1-11.7 7L4 20l1.1-4.4A8 8 0 1 1 21 12z"/>',strength:'<path d="M6 8v8M18 8v8M3 10v4M21 10v4M6 12h12"/>',tips:'<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.5 1 2.5h6c0-1 .3-1.8 1-2.5A6 6 0 0 0 12 3z"/>'};
+const TABS=[['dashboard','Tableau de bord'],['plan','Plan'],['coach','Coach IA'],['strength','Renfo'],['tips','Conseils']];
+$('#nav').insertAdjacentHTML('beforeend',TABS.map(([k,l])=>`<a href="#${k}" data-k="${k}"><svg viewBox="0 0 24 24">${IC[k]}</svg>${l}</a>`).join(''));
+let G,P,B;
+const fmtP=s=>{const m=Math.floor(s/60);return m+':'+String(Math.round(s%60)).padStart(2,'0')};
+const fmtT=s=>{const h=Math.floor(s/3600),m=Math.floor(s%3600/60);return h?`${h} h ${String(m).padStart(2,'0')}`:`${m} min`};
+const D=s=>new Date(s+'T12:00:00'),iso=d=>d.toISOString().slice(0,10),addD=(s,n)=>{const d=D(s);d.setDate(d.getDate()+n);return iso(d)};
+const fr=s=>D(s).toLocaleDateString('fr-FR',{weekday:'short',day:'numeric',month:'short'});
+const today=iso(new Date());
+const runs=()=>G.activities.filter(a=>/run/i.test(a.type)||a.type==='');
+const load=a=>a.load||(a.sec/60)*Math.pow((a.hr||140)/150,2)*(a.te?a.te/3:1);
+const sumLoad=(from,to)=>runs().filter(a=>a.date>=from&&a.date<=to).reduce((s,a)=>s+load(a),0);
+function acwr(){const a=sumLoad(addD(today,-6),today),c=sumLoad(addD(today,-27),today)/4;return{a,c,r:c?a/c:0}}
+const zone=r=>r<.8?['Sous-charge','mu']:r<=1.3?['Zone optimale','ok']:r<=1.5?['Attention','warn']:['Risque élevé','bad'];
+const weeks=n=>{const out=[];const mon=addD(today,-((D(today).getDay()+6)%7));for(let i=n-1;i>=0;i--){const s=addD(mon,-7*i),e=addD(s,6);out.push({s,km:runs().filter(a=>a.date>=s&&a.date<=e).reduce((t,a)=>t+a.km,0)})}return out};
+const banner=()=>G.demo?'<div class="banner">Données de démonstration — la synchro Garmin n’est pas encore configurée (voir README).</div>':`<p class="sub">Dernière synchro Garmin : ${G.updated}</p>`;
+
+function dashboard(){
+ const {a,c,r}=acwr(),[zl,zc]=zone(r),w=weeks(8),mx=Math.max(...w.map(x=>x.km),1),R=runs().slice().sort((x,y)=>y.date.localeCompare(x.date));
+ const w7=runs().filter(x=>x.date>=addD(today,-6));const km7=w7.reduce((t,x)=>t+x.km,0),sec7=w7.reduce((t,x)=>t+x.sec,0);
+ const dl=G.daily.filter(d=>d.rhr).sort((x,y)=>y.date.localeCompare(x.date));const d0=dl[0]||{};
+ const ang=Math.min(r/2,1)*180;const pl=planData(),cw=curWeek(pl),cwk=pl.weeks[cw-1],ws=weekStats(pl,cwk),nx=flat(pl).find(s=>s.t!=='repos'&&s.date>=today&&stat(s)[0]!=='Validée');const wk=`<div class="card" style="margin:12px 0"><div class="k">Plan · S${cw} ${cwk.label}</div><div class="v">${ws.km.toFixed(0)}<small> / ${cwk.km} km</small></div><div style="height:8px;background:var(--line);border-radius:9px;margin:10px 0"><div style="height:100%;width:${Math.min(ws.km/cwk.km*100,100)}%;background:var(--acc);border-radius:9px"></div></div><span style="color:var(--mute);font-size:14px">${nx?'Prochaine : '+ICO[nx.t]+' '+nx.title+' ('+fr(nx.date)+')':'Plan terminé'}</span></div>`;
+ app.innerHTML=`<h1>Salut 👋</h1>${banner()}
+ <div class="grid">
+  <div class="card" style="grid-column:span 2"><div class="k">Ratio de charge (7 j / 28 j)</div>
+   <svg viewBox="0 0 200 110" style="width:100%;max-width:260px;display:block;margin:8px auto 0"><path d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="var(--line)" stroke-width="16" stroke-linecap="round"/><path d="M20 100A80 80 0 0 1 180 100" fill="none" stroke="var(--acc)" stroke-width="16" stroke-linecap="round" pathLength="180" stroke-dasharray="${ang} 180"/><text x="100" y="88" text-anchor="middle" style="font:800 34px system-ui;fill:var(--ink)">${r.toFixed(2)}</text></svg>
+   <div style="text-align:center"><span class="pill ${zc}">${zl}</span></div></div>
+  <div class="card"><div class="k">Km (7 j)</div><div class="v">${km7.toFixed(1)}<small> km</small></div></div>
+  <div class="card"><div class="k">Temps (7 j)</div><div class="v">${fmtT(sec7)}</div></div>
+  <div class="card"><div class="k">FC repos</div><div class="v">${d0.rhr||'–'}<small> bpm</small></div></div>
+  <div class="card"><div class="k">Sommeil</div><div class="v">${d0.sleep||'–'}<small> /100</small></div></div>
+ </div>
+ ${wk}<h2>Volume hebdomadaire</h2><div class="card"><div class="bar" style="margin-bottom:22px">${w.map(x=>`<i style="height:${x.km/mx*100}%" title="${x.km.toFixed(1)} km"><em>${x.km.toFixed(0)}</em></i>`).join('')}</div></div>
+ <h2>Dernières activités</h2><div class="card">${R.slice(0,8).map(x=>`<div class="row"><div class="g"><b>${x.name||'Course'}</b><span>${fr(x.date)} · ${fmtT(x.sec)}${x.hr?' · '+x.hr+' bpm':''}</span></div><div style="text-align:right"><b>${x.km.toFixed(1)} km</b><span>${fmtP(x.sec/x.km)} /km</span></div></div>`).join('')||'<span class="sub">Aucune activité</span>'}</div>`;
+}
+
+function planData(){try{return JSON.parse(localStorage.getItem('plan'))||P}catch{return P}}
+const KIND={velo:/cycl|bik/i,renfo:/strength|fitness|gym|training/i};
+const isRun=t=>['ef','seuil','cotes','tempo','sl','recup','course'].includes(t);
+function flat(pl){const o=[];pl.weeks.forEach(w=>{const base=(w.n-1)*7;for(let i=0;i<7;i++){const s=w.days.find(x=>x.d===i)||{d:i,t:'repos',title:'Repos'};o.push({...s,week:w.n,date:addD(pl.start,base+i)})}});return o}
+function actsFor(s){const a=G.activities.filter(x=>x.date===s.date);return isRun(s.t)?a.filter(x=>/run/i.test(x.type)):KIND[s.t]?a.filter(x=>KIND[s.t].test(x.type)):a}
+function stat(s){const done=actsFor(s),mn=done.reduce((t,a)=>t+a.sec/60,0),km=done.reduce((t,a)=>t+a.km,0),dp=done.reduce((t,a)=>t+(a.elev||0),0);
+ const info=done.length?`${Math.round(mn)} min`+(km?` · ${km.toFixed(1)} km`:'')+(dp?` · D+ ${Math.round(dp)}`:''):'';
+ if(s.t==='repos')return s.date<=today&&G.activities.some(x=>x.date===s.date&&/run/i.test(x.type))?['Repos non respecté','warn',info]:['Repos','mu',''];
+ if(s.date>today)return['À venir','mu',''];
+ if(!done.length)return s.date===today?['Aujourd’hui','warn','']:['Manquée','bad',''];
+ if(!s.min)return['Faite','ok',info];const p=mn/s.min;
+ return p>=.85&&p<=1.25?['Validée','ok',info]:p<.85?['Écourtée','warn',info]:['Plus long','warn',info]}
+const ICO={ef:'🟢',seuil:'🔴',cotes:'⛰️',tempo:'🟠',sl:'🏔️',recup:'🔵',velo:'🚴',renfo:'💪',repos:'😴',course:'🏁'};
+const wkOf=(pl,n)=>addD(pl.start,(n-1)*7);
+const curWeek=pl=>{const n=Math.floor((D(today)-D(pl.start))/864e5/7)+1;return Math.min(Math.max(n,1),pl.weeks.length)};
+function weekStats(pl,w){const S=flat(pl).filter(s=>s.week===w.n),e=addD(wkOf(pl,w.n),6),km=runs().filter(a=>a.date>=wkOf(pl,w.n)&&a.date<=e).reduce((t,a)=>t+a.km,0);
+ const due=S.filter(s=>s.t!=='repos'&&s.date<=today),ok=due.filter(s=>stat(s)[1]==='ok').length;return{km,due:due.length,ok,total:S.filter(s=>s.t!=='repos').length}}
+function plan(){
+ const pl=planData(),cw=curWeek(pl),S=flat(pl),past=S.filter(s=>s.t!=='repos'&&s.date<today),pok=past.filter(s=>stat(s)[1]==='ok').length;
+ app.innerHTML=`<h1>Plan</h1><p class="sub">${pl.name} · semaine ${cw}/${pl.weeks.length}${past.length?' · '+Math.round(pok/past.length*100)+' % des séances passées validées':''}</p>
+ <div class="card" style="margin-bottom:12px"><span class="k">Repères FC</span><p style="margin-top:4px">${pl.zones||''}</p></div>
+ ${pl.weeks.map(w=>{const st=weekStats(pl,w),pct=Math.min(st.km/w.km,1)*100;return`<details class="card" style="margin-bottom:10px" ${w.n===cw?'open':''}><summary style="cursor:pointer;list-style:none"><div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:17px">S${w.n} · ${w.label}</b><span class="pill ${w.n===cw?'':'mu'}">${w.n<cw||w.n===cw?st.ok+'/'+st.due+' ok':'à venir'}</span></div><span style="color:var(--mute);font-size:14px">${fr(wkOf(pl,w.n))} · ${st.km.toFixed(0)} / ${w.km} km · D+ ${w.dplus||'–'}</span><div style="height:6px;background:var(--line);border-radius:9px;margin-top:8px"><div style="height:100%;width:${pct}%;background:var(--acc);border-radius:9px"></div></div></summary>
+ ${w.note?`<p class="banner" style="margin:12px 0 0">${w.note}</p>`:''}${S.filter(s=>s.week===w.n).map(s=>{const[l,c,i]=stat(s);return`<div class="row"><span style="font-size:20px">${ICO[s.t]}</span><div class="g"><b>${s.title}${s.night?' 🌙':''}</b><span>${fr(s.date)}${i?' · réalisé : '+i:''}</span></div><span class="pill ${c}">${l}</span></div>`}).join('')}</details>`}).join('')}
+ <h2>Importer un autre plan</h2><div class="card"><p class="sub">Format identique à <code>data/plan.json</code> (start, weeks…).</p><textarea id="pj" rows="4"></textarea><div style="display:flex;gap:8px;margin-top:10px"><button onclick="try{const j=JSON.parse($('#pj').value);if(!j.weeks)throw 0;localStorage.setItem('plan',JSON.stringify(j));plan()}catch{alert('JSON invalide')}">Enregistrer</button><button class="s" onclick="localStorage.removeItem('plan');plan()">Plan du dépôt</button></div></div>`}
+
+const histKey='chat';let hist=[];
+function coach(){
+ const k=localStorage.getItem('akey')||'';
+ app.innerHTML=`<h1>Coach IA</h1><p class="sub">Analyse tes données Garmin, ton plan et les principes du livre.</p>
+ ${k?'':'<div class="card" style="margin-bottom:14px"><b>Clé API Anthropic</b><p class="sub" style="margin:4px 0 10px">Stockée uniquement dans ton navigateur (localStorage).</p><input id="ak" type="password" placeholder="sk-ant-…"><button style="margin-top:10px" onclick="localStorage.setItem(\'akey\',$(\'#ak\').value.trim());coach()">Enregistrer</button></div>'}
+ <div class="chips">${['Analyse ma semaine','Mon ratio de charge est-il OK ?','Ai-je respecté mon plan ?','Quels exercices de renfo prioriser ?'].map(q=>`<button onclick="ask('${q}')">${q}</button>`).join('')}</div>
+ <div class="chat" id="ch">${hist.map(m=>`<div class="m ${m.role=='user'?'u':'a'}">${m.content.replace(/</g,'&lt;')}</div>`).join('')}</div>
+ <div class="inp"><input id="q" placeholder="Pose ta question…" onkeydown="if(event.key==='Enter')ask()"><button onclick="ask()">Envoyer</button></div>
+ ${k?'<p style="margin-top:14px"><button class="s" onclick="localStorage.removeItem(\'akey\');coach()">Changer de clé</button></p>':''}`;
+}
+function ctx(){const {a,c,r}=acwr();return`Tu es un coach de course à pied. Réponds en français, concis, concret, sans jargon inutile. Date: ${today}.
+Ratio de charge aigu/chronique: ${r.toFixed(2)} (charge 7j ${a.toFixed(0)}, moyenne 28j ${c.toFixed(0)}).
+Activités (30 derniers jours): ${JSON.stringify(runs().filter(x=>x.date>=addD(today,-30)).map(x=>({d:x.date,km:x.km,min:Math.round(x.sec/60),pace:fmtP(x.sec/x.km),hr:x.hr,te:x.te})))}
+Récupération (14 j): ${JSON.stringify(G.daily.slice(0,14))}
+Plan SaintéLyon (semaine ${curWeek(planData())}/14, zones: ${planData().zones}). Séances ±10 jours: ${JSON.stringify(flat(planData()).filter(s=>s.date>=addD(today,-10)&&s.date<=addD(today,10)).map(s=>({date:s.date,type:s.t,title:s.title,fait:stat(s)[0]})))}
+Exercices de renfo disponibles (livre Science of Running): ${B.exercises.map(e=>e.title).join(', ')}.${G.demo?' NB: données de démonstration.':''}`}
+async function ask(t){const q=$('#q');t=t||q.value.trim();if(!t)return;const key=localStorage.getItem('akey');if(!key)return alert('Ajoute ta clé API Anthropic.');
+ hist.push({role:'user',content:t});coach();const ch=$('#ch');ch.insertAdjacentHTML('beforeend','<div class="m a" id="th">…</div>');
+ try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'content-type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-5-5',max_tokens:1000,system:ctx(),messages:hist})});
+  const j=await r.json();if(j.error)throw new Error(j.error.message);hist.push({role:'assistant',content:j.content.map(b=>b.text||'').join('')})}
+ catch(e){hist.push({role:'assistant',content:'Erreur : '+e.message})}coach();scrollTo(0,document.body.scrollHeight)}
+
+let cat='Tous';
+function strength(){
+ const cats=['Tous',...new Set(B.exercises.map(e=>e.cat))];const L=B.exercises.filter(e=>cat=='Tous'||e.cat==cat);
+ app.innerHTML=`<h1>Renforcement</h1><p class="sub">${B.exercises.length} exercices du livre — touche une carte pour voir les schémas.</p>
+ <div class="chips">${cats.map(c=>`<button class="${c==cat?'on':''}" onclick="cat='${c}';strength()">${c}</button>`).join('')}</div>
+ <div class="ex">${L.map(e=>`<div class="card" onclick="openEx('${e.id}')"><img loading="lazy" src="assets/book/p${e.pages[0]}.jpg" alt=""><div class="t"><b>${e.title}</b><span>${e.cat} · ${e.pages.length} p.</span></div></div>`).join('')}</div>`}
+function openEx(id){const e=B.exercises.find(x=>x.id===id);$('#dt').textContent=e.title;$('#db').innerHTML=e.pages.map(p=>`<img src="assets/book/p${p}.jpg" alt="${e.title} p.${p}">`).join('');dlg.showModal()}
+function tips(){
+ const T=[['Gérer la douleur & rester motivé','Entraînement = meilleure tolérance à la douleur. Anticipe l’inconfort, utilise le dialogue interne positif et la distraction ; prévois de la récupération pour éviter le surentraînement.',0],
+ ['Nutrition','Glucides pour l’énergie, protéines 4–6 fois par jour. Repas riche en glucides 2–3 h avant. Au-delà de 90 min : 30–60 g de glucides/h. Teste tout à l’entraînement.',1],
+ ['Hydratation','Bois à la soif : surhydrater est aussi risqué que déshydrater (hyponatrémie). Pense aux électrolytes quand tu transpires beaucoup.',2],
+ ['Récupération, mobilité & massage','La récupération est aussi importante que l’entraînement. Récup active, étirements le soir, mobilité dynamique le matin, sommeil, auto-massage (balle/rouleau).',3],
+ ['Conseils de course','Charge en glucides les jours avant, ~60 g/h en course longue, objectifs A/B/C, cours à l’effort plutôt qu’à l’allure imposée si les conditions changent.',4]];
+ app.innerHTML=`<h1>Conseils</h1><p class="sub">Synthèses issues du livre — touche pour lire les pages originales.</p>${T.map(([t,s,i])=>`<div class="card" style="margin-bottom:12px;cursor:pointer" onclick="openTip(${i})"><b style="font-size:18px">${t}</b><p style="color:var(--mute);margin-top:6px">${s}</p><span class="pill" style="margin-top:10px">Lire les pages ${B.tips[i].pages[0]}–${B.tips[i].pages.at(-1)}</span></div>`).join('')}`}
+function openTip(i){const t=B.tips[i];$('#dt').textContent=t.title;$('#db').innerHTML=t.pages.map(p=>`<img src="assets/book/p${p}.jpg">`).join('');dlg.showModal()}
+
+const R={dashboard,plan,coach,strength,tips};
+function route(){const k=(location.hash||'#dashboard').slice(1);document.querySelectorAll('nav a').forEach(a=>a.classList.toggle('on',a.dataset.k===k));(R[k]||dashboard)();scrollTo(0,0)}
+(async()=>{[G,P,B]=await Promise.all(['garmin','plan','book'].map(f=>fetch(`data/${f}.json?`+Date.now()).then(r=>r.json())));
+ addEventListener('hashchange',route);route();if('serviceWorker'in navigator)navigator.serviceWorker.register('sw.js')})();
+</script></body></html>
